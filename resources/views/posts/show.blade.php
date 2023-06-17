@@ -4,16 +4,17 @@
         <p class="mt-2">Description: {{ $post->content }}</p>
 
         @if ($post->image)
-            <img src="/images/{{ $post->image }}" alt="Post image">
+            <img src="{{ asset('storage/images/' . $post->image) }}" alt="Post image">
         @endif
 
         <p class="mt-5">Links:</p>
-        @if (is_array($post->repeatable_fields))
+        @if ($post->repeatable_fields)
             @foreach ($post->repeatable_fields as $field)
-                <div class="mt-4">
-                    <h2 class="text-lg">name: {{ $field['name'] }}</h2>
-                    <p>description: {{ $field['description'] }}</p>
-                </div>
+                <h2>{{ $field['name'] }}</h2>
+                <p>{{ $field['description'] }}</p>
+                @if (isset($field['image']) && is_string($field['image']))
+                    <img src="{{ asset('storage/app/' . $field['image']) }}" alt="Field image">
+                @endif
             @endforeach
         @endif
     </div>

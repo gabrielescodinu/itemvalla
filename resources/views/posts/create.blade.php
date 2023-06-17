@@ -76,6 +76,15 @@
             });
             fieldContainer.append(descriptionLabel, descriptionInput);
 
+            // Aggiungi un campo di upload di immagini
+            const imageLabel = $("<label>").text("Field Image");
+            const imageInput = $("<input>").attr({
+                type: "file",
+                name: `repeatable_fields[${index}][image]`,
+                required: true,
+            });
+            fieldContainer.append(imageLabel, imageInput);
+
             const removeButton = $("<button>").text("Remove");
             removeButton.on("click", function(event) {
                 event.preventDefault();
