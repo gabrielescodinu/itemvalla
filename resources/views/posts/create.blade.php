@@ -19,9 +19,10 @@
                             name="content" rows="5" required>{{ old('content') }}</textarea>
                     </div>
 
+                    add a input for the image file
                     <div class="mt-4">
                         <label for="image">Image</label>
-                        <input id="image" class="block w-full mt-2 px-3 py-2 text-gray-100 outline-none border rounded-lg border-none focus:border-primary focus:ring-primary bg-white/[.075]" type="file" name="image" />
+                        <input id="image" type="file" name="image" required>
                     </div>
 
                     <div id="repeatable-fields-container">

@@ -26,16 +26,21 @@ class PostController extends Controller
         $post = new Post;
         $post->title = $request->title;
         $post->content = $request->content;
-    
+        
+        // save image in storage and save path in db
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/images');
             $post->image = str_replace('public/', '', $imagePath);
         }
+
         
         $post->user_id = Auth::id();
+
+
     
         // Recupera i campi ripetibili
         $repeatableFields = [];
+
     
         if ($request->has('repeatable_fields')) {
             foreach ($request->repeatable_fields as $field) {
@@ -52,6 +57,7 @@ class PostController extends Controller
                 $repeatableFields[] = $repeatableField;
             }
         }
+
 
     
         $post->repeatable_fields = json_encode($repeatableFields);
