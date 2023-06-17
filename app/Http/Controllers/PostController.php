@@ -22,53 +22,44 @@ class PostController extends Controller
             'repeatable_fields.*.name' => 'required|max:255',
             'repeatable_fields.*.description' => 'required',
         ]);
-    
+
         $post = new Post;
         $post->title = $request->title;
         $post->content = $request->content;
-        
+
         // save image in storage and save path in db
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('public/images');
-            $post->image = str_replace('public/', '', $imagePath);
+            $post->image = str_replace('public/images', '', $imagePath);
         }
 
-        
         $post->user_id = Auth::id();
 
-
-    
         // Recupera i campi ripetibili
         $repeatableFields = [];
 
-    
         if ($request->has('repeatable_fields')) {
             foreach ($request->repeatable_fields as $field) {
                 $repeatableField = [
                     'name' => $field['name'],
                     'description' => $field['description'],
                 ];
-    
+
                 if (isset($field['image']) && $field['image']->isValid()) {
                     $imagePath = $field['image']->store('public/images');
                     $repeatableField['image'] = str_replace('public/images/', '', $imagePath);
                 }
-    
+
                 $repeatableFields[] = $repeatableField;
             }
         }
 
-
-    
         $post->repeatable_fields = json_encode($repeatableFields);
         $post->save();
-    
+
         return redirect()->route('posts.index')
             ->with('success', 'Post created successfully.');
     }
-    
-        
-
 
     public function show(Post $post)
     {
