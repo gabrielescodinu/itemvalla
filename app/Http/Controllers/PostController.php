@@ -28,19 +28,14 @@ class PostController extends Controller
         $post->content = $request->content;
     
         if ($request->hasFile('image')) {
-            $imageName = time() . '.' . $request->image->extension();
-            $request->image->move(public_path('images'), $imageName);
-            $post->image = $imageName;
+            $imagePath = $request->file('image')->store('public/images');
+            $post->image = str_replace('public/', '', $imagePath);
         }
-    
+        
         $post->user_id = Auth::id();
-
-
     
         // Recupera i campi ripetibili
         $repeatableFields = [];
-
-
     
         if ($request->has('repeatable_fields')) {
             foreach ($request->repeatable_fields as $field) {
@@ -50,21 +45,22 @@ class PostController extends Controller
                 ];
     
                 if (isset($field['image']) && $field['image']->isValid()) {
-                    $imagePath = $field['image']->store('images');
-                    $repeatableField['image'] = $imagePath;
+                    $imagePath = $field['image']->store('public/images');
+                    $repeatableField['image'] = str_replace('public/images/', '', $imagePath);
                 }
     
                 $repeatableFields[] = $repeatableField;
             }
         }
 
+    
         $post->repeatable_fields = json_encode($repeatableFields);
-
         $post->save();
- 
+    
         return redirect()->route('posts.index')
             ->with('success', 'Post created successfully.');
     }
+    
         
 
 

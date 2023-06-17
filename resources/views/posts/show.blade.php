@@ -13,7 +13,7 @@
                 <h2>{{ $field['name'] }}</h2>
                 <p>{{ $field['description'] }}</p>
                 @if (isset($field['image']) && is_string($field['image']))
-                    <img src="{{ asset('storage/app/' . $field['image']) }}" alt="Field image">
+                    <img class="rounded-full h-20 w-20" src="{{ asset('storage/images/' . $field['image']) }}" alt="Field image">
                 @endif
             @endforeach
         @endif
