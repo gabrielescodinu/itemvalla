@@ -28,8 +28,11 @@
             @endif
 
             <!-- Page Content -->
-            <main>
-                {{ $slot }}
+            <main class="relative p-5">
+                <div class="">
+                    {{ $slot }}
+                </div>
+                <div class="absolute inset-0 blur-[118px] max-w-lg h-[800px] mr-auto sm:max-w-3xl sm:h-[400px] bg-gradient-to-r from-primaryfade to-secondaryfade pointer-events-none"> </div>
             </main>
         </div>
     </body>
