@@ -22,8 +22,9 @@
                 </a>
             </div>
 
-            <div class="w-full">
+            <div class="w-full relative p-5 max-w-2xl">
                 {{ $slot }}
+                <div class="absolute inset-0 blur-[118px] max-w-lg h-[800px] mx-auto sm:max-w-3xl sm:h-[400px] bg-gradient-to-r from-primaryfade to-secondaryfade pointer-events-none"> </div>
             </div>
         </div>
     </body>
